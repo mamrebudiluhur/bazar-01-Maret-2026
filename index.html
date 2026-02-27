@@ -11,9 +11,6 @@
     margin: 1cm;
     color:#000;
   }
-  body.locked{
-    display:none;
-  }
   .container{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -47,24 +44,10 @@
 </style>
 </head>
 
-<body class="locked">
+<body>
 
 <div class="container" id="output"></div>
 
-<!-- PASSWORD -->
-<script>
-const PASSWORD = "mamre2026";
-const input = prompt("Masukkan password:");
-
-if (input !== PASSWORD) {
-  document.body.innerHTML = "<h2>Akses Ditolak</h2>";
-  throw new Error("Akses ditolak");
-} else {
-  document.body.classList.remove("locked");
-}
-</script>
-
-<!-- DATA & RENDER -->
 <script>
 const dataPemesan = [
   {noKupon:1,nama:"Pt. Bp Berto",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
@@ -121,11 +104,8 @@ const dataPemesan = [
 const output=document.getElementById("output");
 
 dataPemesan.forEach(p=>{
-  if(p.total<=0) return;
-
-  const kupon = String(p.noKupon).padStart(3,"0");
-  let makanan=[], minuman=[];
-
+  const kupon=String(p.noKupon).padStart(3,"0");
+  let makanan=[],minuman=[];
   if(p.b1)makanan.push(`Lomok-lomok B1 (${p.b1})`);
   if(p.b2)makanan.push(`Lomok-lomok B2 (${p.b2})`);
   if(p.bpk)makanan.push(`BPK (${p.bpk})`);
@@ -135,7 +115,7 @@ dataPemesan.forEach(p=>{
   if(p.naga)minuman.push(`Naga (${p.naga})`);
   if(p.alpukat)minuman.push(`Alpukat (${p.alpukat})`);
 
-  output.innerHTML += `
+  output.innerHTML+=`
   <div class="struk">
     <div class="judul">BAZAR MAMRE RG. GBKP BUDI LUHUR</div>
     <div class="garis"></div>
@@ -144,8 +124,7 @@ dataPemesan.forEach(p=>{
     <br>
     ${makanan.length?`<div class="row"><div class="label">Makanan</div><div class="value">: ${makanan.join(", ")}</div></div>`:""}
     ${minuman.length?`<div class="row"><div class="label">Minuman</div><div class="value">: ${minuman.join(", ")}</div></div>`:""}
-    <div class="garis"></div>
-    <div class="row total"><div class="label">TOTAL</div><div class="value">: Rp ${p.total.toLocaleString("id-ID")}</div></div>
+    ${p.total>0?`<div class="garis"></div><div class="row total"><div class="label">TOTAL</div><div class="value">: Rp ${p.total.toLocaleString("id-ID")}</div></div>`:""}
   </div>`;
 });
 </script>
