@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Struk Bazar Mamre</title>
+
+<style>
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin: 1cm;
+    color:#000;
+  }
+  .container{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0.5cm;
+  }
+  .struk{
+    border:1px dashed #000;
+    padding:8px;
+    box-sizing:border-box;
+  }
+  .judul{
+    text-align:center;
+    font-weight:bold;
+  }
+  .garis{
+    border-top:1px dashed #000;
+    margin:4px 0;
+  }
+  .row{
+    display:flex;
+  }
+  .label{
+    width:70px;
+  }
+  .value{
+    flex:1;
+  }
+  .total{
+    font-weight:bold;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="output"></div>
+
+<script>
+const dataPemesan = [
+  {noKupon:1,nama:"Pt. Bp Berto",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:2,nama:"Bp. Samuel",b1:1,b2:0,bpk:0,sirsak:0,jeruk:2,kuini:0,naga:0,alpukat:0,total:70000},
+  {noKupon:3,nama:"Dr. Eston",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:4,nama:"Nd. Intan",b1:0,b2:0,bpk:0,sirsak:1,jeruk:1,kuini:1,naga:1,alpukat:0,total:40000},
+  {noKupon:5,nama:"Pt. Darwin S",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:3,naga:0,alpukat:0,total:130000},
+  {noKupon:6,nama:"Pt. Bp. Meysi T",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:2,naga:0,alpukat:0,total:70000},
+  {noKupon:7,nama:"Bp. Indah S",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
+  {noKupon:8,nama:"Pt. Bp. Jody G",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
+  {noKupon:9,nama:"Bp. Grace Kacaribu",b1:5,b2:0,bpk:5,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:500000},
+  {noKupon:11,nama:"Wilmar S",b1:1,b2:0,bpk:0,sirsak:1,jeruk:0,kuini:1,naga:0,alpukat:0,total:70000},
+  {noKupon:12,nama:"Dr. Jefri",b1:1,b2:0,bpk:0,sirsak:0,jeruk:2,kuini:0,naga:0,alpukat:0,total:70000},
+  {noKupon:13,nama:"Nd. Lompoh",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:1,alpukat:0,total:70000},
+  {noKupon:14,nama:"Nd. Petra",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
+  {noKupon:15,nama:"Bulang Varo",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:1,alpukat:0,total:60000},
+  {noKupon:16,nama:"Bp. Lionel",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
+  {noKupon:17,nama:"Bp. Ruth Damanik",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:1,naga:0,alpukat:0,total:60000},
+  {noKupon:18,nama:"Daniel PA",b1:0,b2:2,bpk:2,sirsak:1,jeruk:1,kuini:1,naga:1,alpukat:0,total:240000},
+  {noKupon:19,nama:"Nd. Vina",b1:1,b2:0,bpk:0,sirsak:1,jeruk:0,kuini:0,naga:1,alpukat:0,total:70000},
+  {noKupon:20,nama:"Bp. Lia T",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:21,nama:"Pt. Bp. Isak S",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
+  {noKupon:22,nama:"Pt. Em F. Tarigan",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:23,nama:"Dk. Nd Ezra",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:24,nama:"Bp. Axl Ginting",b1:0,b2:1,bpk:1,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
+  {noKupon:25,nama:"Nd. Lamhot",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:26,nama:"Girik / Bethlehem",b1:0,b2:1,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
+  {noKupon:29,nama:"Bp. Girik Bangun",b1:2,b2:2,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:200000},
+  {noKupon:57,nama:"Nd. Lita Br Kacaribu",b1:0,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:1,naga:0,alpukat:1,total:20000},
+  {noKupon:58,nama:"Bp. Firsabella",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:59,nama:"Bp. Cindy Tarigan",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:60,nama:"Bp. Suang",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:61,nama:"Bp. Karen Sinukaban",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:62,nama:"Bp. Sayna Sembiring",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:63,nama:"Bp. Eben Tarigan",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
+  {noKupon:64,nama:"Pt. Bp. Mia Ginting",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:65,nama:"Dk. Nd Kiko Br Karo",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:66,nama:"Nd. Lias Br Semb",b1:2,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:1,alpukat:0,total:120000},
+  {noKupon:69,nama:"Bp. Friska Silaban",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:70,nama:"Nd. Mora Br Tarigan",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:71,nama:"Bp. Elin Sitepu",b1:0,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:2,naga:0,alpukat:0,total:20000},
+  {noKupon:72,nama:"Bp. Sauza Ginting",b1:1,b2:0,bpk:0,sirsak:1,jeruk:1,kuini:1,naga:1,alpukat:0,total:90000},
+  {noKupon:73,nama:"Johannes Sitepu",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:74,nama:"Bp. Eky",b1:0,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:2,total:20000},
+  {noKupon:75,nama:"Kalvin Ginting",b1:0,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:1,total:20000},
+  {noKupon:76,nama:"Bp. Natanael",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:77,nama:"Pt. Em. Bp. Yani T",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
+  {noKupon:78,nama:"Riski Sitepu",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:79,nama:"Bp. Valerin Ginting",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
+  {noKupon:80,nama:"Bp. Oktri Sembiring",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:2,naga:0,alpukat:0,total:70000},
+  {noKupon:81,nama:"Bp. Tiago Bancin",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000}
+];
+
+const output=document.getElementById("output");
+
+dataPemesan.forEach(p=>{
+  const kupon=String(p.noKupon).padStart(3,"0");
+  let makanan=[],minuman=[];
+  if(p.b1)makanan.push(`Lomok-lomok B1 (${p.b1})`);
+  if(p.b2)makanan.push(`Lomok-lomok B2 (${p.b2})`);
+  if(p.bpk)makanan.push(`BPK (${p.bpk})`);
+  if(p.sirsak)minuman.push(`Sirsak (${p.sirsak})`);
+  if(p.jeruk)minuman.push(`Jeruk (${p.jeruk})`);
+  if(p.kuini)minuman.push(`Kuini (${p.kuini})`);
+  if(p.naga)minuman.push(`Naga (${p.naga})`);
+  if(p.alpukat)minuman.push(`Alpukat (${p.alpukat})`);
+
+  output.innerHTML+=`
+  <div class="struk">
+    <div class="judul">BAZAR MAMRE RG. GBKP BUDI LUHUR</div>
+    <div class="garis"></div>
+    <div class="row"><div class="label">No Kupon</div><div class="value">: ${kupon}</div></div>
+    <div class="row"><div class="label">Nama</div><div class="value">: ${p.nama}</div></div>
+    <br>
+    ${makanan.length?`<div class="row"><div class="label">Makanan</div><div class="value">: ${makanan.join(", ")}</div></div>`:""}
+    ${minuman.length?`<div class="row"><div class="label">Minuman</div><div class="value">: ${minuman.join(", ")}</div></div>`:""}
+    ${p.total>0?`<div class="garis"></div><div class="row total"><div class="label">TOTAL</div><div class="value">: Rp ${p.total.toLocaleString("id-ID")}</div></div>`:""}
+  </div>`;
+});
+</script>
+
+</body>
+</html>
