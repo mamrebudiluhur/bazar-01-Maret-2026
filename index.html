@@ -47,7 +47,19 @@
 <body>
 
 <div class="container" id="output"></div>
+<!-- PASSWORD -->
+<script>
+const PASSWORD = "mamre2026";
+const input = prompt("Masukkan password:");
 
+if (input !== PASSWORD) {
+  document.body.innerHTML = "<h2>Akses Ditolak</h2>";
+  throw new Error("Akses ditolak");
+} else {
+  document.body.classList.remove("locked");
+}
+</script>
+  
 <script>
 const dataPemesan = [
   {noKupon:1,nama:"Pt. Bp Berto",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
