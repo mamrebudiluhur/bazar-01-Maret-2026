@@ -2,148 +2,350 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Struk Bazar Mamre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan Mamre GBKP Rg. Budi Luhur</title>
 
 <style>
-  body{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    margin: 1cm;
-    color:#000;
-  }
-  .container{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:0.5cm;
-  }
-  .struk{
-    border:1px dashed #000;
-    padding:8px;
-    box-sizing:border-box;
-  }
-  .judul{
-    text-align:center;
-    font-weight:bold;
-  }
-  .garis{
-    border-top:1px dashed #000;
-    margin:4px 0;
-  }
-  .row{
-    display:flex;
-  }
-  .label{
-    width:70px;
-  }
-  .value{
-    flex:1;
-  }
-  .total{
-    font-weight:bold;
-  }
+:root{
+  --primary:#1f3c88;
+  --secondary:#4a69bd;
+  --bg:#f4f7fb;
+  --card:#ffffff;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:var(--bg);
+  color:#333;
+}
+
+/* LOGIN */
+#loginOverlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#1f3c88,#0f2027);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.login-box{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(15px);
+  padding:40px;
+  border-radius:16px;
+  text-align:center;
+  color:white;
+  width:320px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.login-box input{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border-radius:8px;
+  border:none;
+}
+
+.login-box button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border-radius:8px;
+  border:none;
+  background:white;
+  color:var(--primary);
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.login-box button:hover{
+  background:#e6ecff;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+  display:none;
+}
+
+header h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:1px;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1200px;
+  margin:-40px auto 40px;
+  padding:20px;
+  display:none;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+  margin-bottom:30px;
+  animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(15px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.section-title{
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:20px;
+  color:var(--primary);
+}
+
+/* SUMMARY */
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.summary-item{
+  background:linear-gradient(135deg,#eef2ff,#ffffff);
+  padding:25px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.summary-item h3{
+  margin:10px 0 0;
+  font-size:26px;
+  color:var(--primary);
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+
+th{
+  background:var(--primary);
+  color:white;
+  padding:10px;
+}
+
+td{
+  padding:8px;
+  border-bottom:1px solid #eee;
+}
+
+td:last-child{
+  text-align:right;
+}
+
+tr:hover{
+  background:#f9f9f9;
+}
+
+/* LIST */
+ul{
+  padding-left:20px;
+  line-height:1.7;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:25px;
+  color:#777;
+  font-size:14px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="container" id="output"></div>
-<!-- PASSWORD -->
-<script>
-const PASSWORD = "mamre2026";
-const input = prompt("Masukkan password:");
+<!-- LOGIN -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <h2>MAMRE GBKP</h2>
+    <p>Runggun Budi Luhur</p>
+    <input type="password" id="passwordInput" placeholder="Masukkan Password">
+    <button onclick="checkPassword()">Masuk</button>
+  </div>
+</div>
 
-if (input !== PASSWORD) {
-  document.body.innerHTML = "<h2>Akses Ditolak</h2>";
-  throw new Error("Akses ditolak");
-} else {
-  document.body.classList.remove("locked");
+<header id="headerSection">
+  <h1>LAPORAN KEGIATAN MAMRE</h1>
+  <p>Periode Januari – Februari 2026</p>
+</header>
+
+<div class="container" id="mainContent">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="card">
+  <div class="section-title">Executive Summary</div>
+  <div class="summary-grid">
+    <div class="summary-item">
+      <p>Total Kehadiran</p>
+      <h3>99 Kalak</h3>
+    </div>
+    <div class="summary-item">
+      <p>Saldo Kas Akhir</p>
+      <h3>Rp 5.069.000</h3>
+    </div>
+    <div class="summary-item">
+      <p>Persentase Kehadiran</p>
+      <h3>24%</h3>
+    </div>
+    <div class="summary-item">
+      <p>Periode</p>
+      <h3>Jan–Feb 2026</h3>
+    </div>
+  </div>
+</div>
+
+<!-- RINGKASAN BIDANG -->
+<div class="card">
+  <div class="section-title">Ringkasan Bidang Kerja</div>
+  <ul>
+    <li><strong>Koinonia:</strong> PA gabungan mingguan, latihan musik & vocal group.</li>
+    <li><strong>Marturia:</strong> Pendataan anggota kurang aktif & Jamuan Kasih.</li>
+    <li><strong>Diakonia:</strong> Kunjungan kasih kepada anggota sakit.</li>
+    <li><strong>Dana Usaha:</strong> Distribusi buku PA & pengutipan iuran.</li>
+    <li><strong>Kesekretariatan:</strong> Perbaikan speaker & cetak buku iuran.</li>
+  </ul>
+</div>
+
+<!-- KEHADIRAN -->
+<div class="card">
+  <div class="section-title">Data Kehadiran PA Mamre</div>
+  <table>
+    <tr>
+      <th>No</th><th>Sektor</th><th>Jan</th><th>Feb</th><th>Total</th>
+    </tr>
+    <tr><td>1</td><td>Jerusalem</td><td>2</td><td>9</td><td>11</td></tr>
+    <tr><td>2</td><td>Filadelfia</td><td>5</td><td>10</td><td>15</td></tr>
+    <tr><td>3</td><td>Tesalonika</td><td>5</td><td>11</td><td>16</td></tr>
+    <tr><td>4</td><td>Nasaret</td><td>8</td><td>23</td><td>31</td></tr>
+    <tr><td>5</td><td>Galatia</td><td>1</td><td>4</td><td>5</td></tr>
+    <tr><td>6</td><td>Betlehem</td><td>4</td><td>10</td><td>14</td></tr>
+    <tr><td>7</td><td>Korintus</td><td>2</td><td>5</td><td>7</td></tr>
+    <tr style="font-weight:bold;background:#eef2ff;">
+      <td colspan="2">Total</td><td>27</td><td>72</td><td>99</td>
+    </tr>
+  </table>
+</div>
+
+<!-- KOORDINASI -->
+<div class="card">
+  <div class="section-title">Koordinasi Kepemimpinan</div>
+  <ul>
+    <li>Menghadiri Sermon & RPL Mamre se-Klasis.</li>
+    <li>Rapat Koordinasi Bulanan Pengurus.</li>
+    <li>Koordinasi lintas sektor & persiapan kegiatan.</li>
+  </ul>
+</div>
+
+<!-- KEUANGAN -->
+<div class="card">
+  <div class="section-title">Laporan Keuangan Rinci</div>
+
+  <div style="overflow-x:auto;">
+  <table>
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+        <th>Keterangan</th>
+        <th>Penerimaan</th>
+        <th>Pengeluaran</th>
+        <th>Saldo</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr><td>12 Jan 2026</td><td>Perjamuan Kasih Mamre</td><td>-</td><td style="text-align:right;">425.000</td><td style="text-align:right;">2.000.000</td></tr>
+      <tr><td></td><td>Kunjungan Diakonia Kel. Bulang Brayen</td><td>-</td><td style="text-align:right;">100.000</td><td style="text-align:right;">1.900.000</td></tr>
+      <tr><td>18 Jan 2026</td><td>Kunjungan Diakonia Kel. Bp. Angel Sembiring</td><td>-</td><td style="text-align:right;">100.000</td><td style="text-align:right;">1.800.000</td></tr>
+
+      <tr><td>29 Jan 2026</td><td>Kolekte PA Mamre</td><td style="text-align:right;">220.000</td><td>-</td><td style="text-align:right;">2.020.000</td></tr>
+      <tr><td></td><td>Makan Bersama PA Awal Tahun</td><td>-</td><td style="text-align:right;">670.000</td><td style="text-align:right;">1.350.000</td></tr>
+      <tr><td></td><td>Transport Pendeta Runggun</td><td>-</td><td style="text-align:right;">50.000</td><td style="text-align:right;">1.300.000</td></tr>
+
+      <tr><td>05 Feb 2026</td><td>Kolekte PA Mamre</td><td style="text-align:right;">255.000</td><td>-</td><td style="text-align:right;">1.555.000</td></tr>
+      <tr><td></td><td>Transport Pendeta Runggun</td><td>-</td><td style="text-align:right;">50.000</td><td style="text-align:right;">1.505.000</td></tr>
+      <tr><td></td><td>Pencetakan Buku Iuran (Sekretariat)</td><td>-</td><td style="text-align:right;">77.000</td><td style="text-align:right;">1.428.000</td></tr>
+      <tr><td></td><td>Iuran Mamre Filadelfia</td><td style="text-align:right;">170.000</td><td>-</td><td style="text-align:right;">1.598.000</td></tr>
+      <tr><td></td><td>Pengembalian Modal Cetak Kalender</td><td style="text-align:right;">1.600.000</td><td>-</td><td style="text-align:right;">3.198.000</td></tr>
+      <tr><td></td><td>Pembelian Buku Mamre (Modal Dana Usaha)</td><td>-</td><td style="text-align:right;">1.620.000</td><td style="text-align:right;">1.578.000</td></tr>
+
+      <tr><td>12 Feb 2026</td><td>Kolekte PA Mamre</td><td style="text-align:right;">120.000</td><td>-</td><td style="text-align:right;">1.698.000</td></tr>
+      <tr><td></td><td>Transport Pt/Dk</td><td>-</td><td style="text-align:right;">50.000</td><td style="text-align:right;">1.648.000</td></tr>
+      <tr><td></td><td>Snack PA Mamre</td><td>-</td><td style="text-align:right;">80.000</td><td style="text-align:right;">1.568.000</td></tr>
+      <tr><td></td><td>TRU Pt. Em. F. Tarigan</td><td style="text-align:right;">50.000</td><td>-</td><td style="text-align:right;">1.618.000</td></tr>
+      <tr><td></td><td>Uang Sewa Speaker dari Moria</td><td style="text-align:right;">50.000</td><td>-</td><td style="text-align:right;">1.668.000</td></tr>
+
+      <tr><td>14 Feb 2026</td><td>Adangen Ramah Tamah Mamre Se-KLASIS MKL</td><td>-</td><td style="text-align:right;">150.000</td><td style="text-align:right;">1.518.000</td></tr>
+
+      <tr><td>19 Feb 2026</td><td>Kolekte PA Mamre</td><td style="text-align:right;">146.000</td><td>-</td><td style="text-align:right;">1.664.000</td></tr>
+      <tr><td></td><td>Transport Pdt</td><td>-</td><td style="text-align:right;">50.000</td><td style="text-align:right;">1.614.000</td></tr>
+      <tr><td></td><td>Snack Minuman</td><td>-</td><td style="text-align:right;">65.000</td><td style="text-align:right;">1.549.000</td></tr>
+
+      <tr><td>23 Feb 2026</td><td>Baterai Gitar</td><td>-</td><td style="text-align:right;">50.000</td><td style="text-align:right;">1.499.000</td></tr>
+
+      <tr><td>26 Feb 2026</td><td>Kolekte PA Mamre</td><td style="text-align:right;">210.000</td><td>-</td><td style="text-align:right;">1.709.000</td></tr>
+      <tr><td></td><td>Perbaikan Speaker Mamre</td><td>-</td><td style="text-align:right;">150.000</td><td style="text-align:right;">1.559.000</td></tr>
+
+      <tr><td>02 Mar 2026</td><td>Keuntungan Uang Bazzar</td><td style="text-align:right;">1.120.000</td><td>-</td><td style="text-align:right;">2.679.000</td></tr>
+      <tr><td></td><td>Rabat Uang Buku Mamre</td><td style="text-align:right;">1.800.000</td><td>-</td><td style="text-align:right;">4.479.000</td></tr>
+
+      <tr><td>03 Mar 2026</td><td>SHU Januari</td><td style="text-align:right;">310.000</td><td>-</td><td style="text-align:right;">4.789.000</td></tr>
+      <tr><td></td><td>SHU Februari</td><td style="text-align:right;">280.000</td><td>-</td><td style="text-align:right;">5.069.000</td></tr>
+
+      <tr style="font-weight:bold;background:#eef2ff;">
+        <td colspan="4">Saldo Akhir per 03 Maret 2026</td>
+        <td style="text-align:right;">Rp 5.069.000</td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+Perdalanen Mamre GBKP Runggun Budi Luhur<br>
+Email: mamrebudiluhur@outlook.co.id
+</footer>
+
+</div>
+
+<script>
+function checkPassword(){
+  const input=document.getElementById("passwordInput").value;
+  if(input==="mamre2026"){
+    document.getElementById("loginOverlay").style.display="none";
+    document.getElementById("mainContent").style.display="block";
+    document.getElementById("headerSection").style.display="block";
+  }else{
+    alert("Password salah!");
+  }
 }
-</script>
-  
-<script>
-const dataPemesan = [
-  {noKupon:1,nama:"Pt. Bp Berto",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:2,nama:"Bp. Samuel",b1:1,b2:0,bpk:0,sirsak:0,jeruk:2,kuini:0,naga:0,alpukat:0,total:70000},
-  {noKupon:3,nama:"Dr. Eston",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:4,nama:"Nd. Intan",b1:0,b2:0,bpk:0,sirsak:1,jeruk:1,kuini:1,naga:1,alpukat:0,total:40000},
-  {noKupon:5,nama:"Pt. Darwin S",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:3,naga:0,alpukat:0,total:130000},
-  {noKupon:6,nama:"Pt. Bp. Meysi T",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:2,naga:0,alpukat:0,total:70000},
-  {noKupon:7,nama:"Bp. Indah S",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
-  {noKupon:8,nama:"Pt. Bp. Jody G",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
-  {noKupon:9,nama:"Bp. Grace Kacaribu",b1:5,b2:0,bpk:5,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:500000},
-  {noKupon:11,nama:"Wilmar S",b1:1,b2:0,bpk:0,sirsak:1,jeruk:0,kuini:1,naga:0,alpukat:0,total:70000},
-  {noKupon:12,nama:"Dr. Jefri",b1:1,b2:0,bpk:0,sirsak:0,jeruk:2,kuini:0,naga:0,alpukat:0,total:70000},
-  {noKupon:13,nama:"Nd. Lompoh",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:1,alpukat:0,total:70000},
-  {noKupon:14,nama:"Nd. Petra",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
-  {noKupon:15,nama:"Bulang Varo",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:1,alpukat:0,total:60000},
-  {noKupon:16,nama:"Bp. Lionel",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
-  {noKupon:17,nama:"Bp. Ruth Damanik",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:1,naga:0,alpukat:0,total:60000},
-  {noKupon:18,nama:"Daniel PA",b1:0,b2:2,bpk:2,sirsak:1,jeruk:1,kuini:1,naga:1,alpukat:0,total:240000},
-  {noKupon:19,nama:"Nd. Vina",b1:1,b2:0,bpk:0,sirsak:1,jeruk:0,kuini:0,naga:1,alpukat:0,total:70000},
-  {noKupon:20,nama:"Bp. Lia T",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:21,nama:"Pt. Bp. Isak S",b1:1,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
-  {noKupon:22,nama:"Pt. Em F. Tarigan",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:23,nama:"Dk. Nd Ezra",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:24,nama:"Bp. Axl Ginting",b1:0,b2:1,bpk:1,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
-  {noKupon:25,nama:"Nd. Lamhot",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:26,nama:"Girik / Bethlehem",b1:0,b2:1,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000},
-  {noKupon:29,nama:"Bp. Girik Bangun",b1:2,b2:2,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:200000},
-  {noKupon:57,nama:"Nd. Lita Br Kacaribu",b1:0,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:1,naga:0,alpukat:1,total:20000},
-  {noKupon:58,nama:"Bp. Firsabella",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:59,nama:"Bp. Cindy Tarigan",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:60,nama:"Bp. Suang",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:61,nama:"Bp. Karen Sinukaban",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:62,nama:"Bp. Sayna Sembiring",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:63,nama:"Bp. Eben Tarigan",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
-  {noKupon:64,nama:"Pt. Bp. Mia Ginting",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:65,nama:"Dk. Nd Kiko Br Karo",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:66,nama:"Nd. Lias Br Semb",b1:2,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:1,alpukat:0,total:120000},
-  {noKupon:69,nama:"Bp. Friska Silaban",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:70,nama:"Nd. Mora Br Tarigan",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:71,nama:"Bp. Elin Sitepu",b1:0,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:2,naga:0,alpukat:0,total:20000},
-  {noKupon:72,nama:"Bp. Sauza Ginting",b1:1,b2:0,bpk:0,sirsak:1,jeruk:1,kuini:1,naga:1,alpukat:0,total:90000},
-  {noKupon:73,nama:"Johannes Sitepu",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:74,nama:"Bp. Eky",b1:0,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:2,total:20000},
-  {noKupon:75,nama:"Kalvin Ginting",b1:0,b2:0,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:1,total:20000},
-  {noKupon:76,nama:"Bp. Natanael",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:77,nama:"Pt. Em. Bp. Yani T",b1:1,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
-  {noKupon:78,nama:"Riski Sitepu",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:79,nama:"Bp. Valerin Ginting",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:80,nama:"Bp. Oktri Sembiring",b1:1,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:2,naga:0,alpukat:0,total:70000},
-  {noKupon:81,nama:"Bp. Tiago Bancin",b1:0,b2:1,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:50000},
-  {noKupon:82,nama:"Bp. Daniel Surbakti",b1:2,b2:0,bpk:0,sirsak:0,jeruk:0,kuini:0,naga:0,alpukat:0,total:100000},
-  {noKupon:83,nama:"Bp. Elkana Sebayang",b1:0,b2:1,bpk:1,sirsak:1,jeruk:1,kuini:1,naga:1,alpukat:0,total:140000},
-  {noKupon:84,nama:"Bp. Dita Kacaribu",b1:1,b2:1,bpk:0,sirsak:0,jeruk:2,kuini:0,naga:0,alpukat:0,total:120000},
-  {noKupon:85,nama:"Bp. Niko Karo-karo",b1:0,b2:1,bpk:0,sirsak:1,jeruk:0,kuini:0,naga:0,alpukat:0,total:60000},
-  {noKupon:86,nama:"Bp. Novi G",b1:0,b2:1,bpk:0,sirsak:0,jeruk:1,kuini:0,naga:0,alpukat:0,total:60000}
-];
-
-const output=document.getElementById("output");
-
-dataPemesan.forEach(p=>{
-  const kupon=String(p.noKupon).padStart(3,"0");
-  let makanan=[],minuman=[];
-  if(p.b1)makanan.push(`Lomok-lomok B1 (${p.b1})`);
-  if(p.b2)makanan.push(`Lomok-lomok B2 (${p.b2})`);
-  if(p.bpk)makanan.push(`BPK (${p.bpk})`);
-  if(p.sirsak)minuman.push(`Sirsak (${p.sirsak})`);
-  if(p.jeruk)minuman.push(`Jeruk (${p.jeruk})`);
-  if(p.kuini)minuman.push(`Kuini (${p.kuini})`);
-  if(p.naga)minuman.push(`Naga (${p.naga})`);
-  if(p.alpukat)minuman.push(`Alpukat (${p.alpukat})`);
-
-  output.innerHTML+=`
-  <div class="struk">
-    <div class="judul">BAZAR MAMRE RG. GBKP BUDI LUHUR</div>
-    <div class="garis"></div>
-    <div class="row"><div class="label">No Kupon</div><div class="value">: ${kupon}</div></div>
-    <div class="row"><div class="label">Nama</div><div class="value">: ${p.nama}</div></div>
-    <br>
-    ${makanan.length?`<div class="row"><div class="label">Makanan</div><div class="value">: ${makanan.join(", ")}</div></div>`:""}
-    ${minuman.length?`<div class="row"><div class="label">Minuman</div><div class="value">: ${minuman.join(", ")}</div></div>`:""}
-    ${p.total>0?`<div class="garis"></div><div class="row total"><div class="label">TOTAL</div><div class="value">: Rp ${p.total.toLocaleString("id-ID")}</div></div>`:""}
-  </div>`;
-});
 </script>
 
 </body>
