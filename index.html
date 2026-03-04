@@ -344,7 +344,12 @@ footer{
   font-size:18px;
   letter-spacing:1px;
 }
-</style>
+
+/* RATATENGAH TABEL KEHADIRAN */
+#kehadiranHead th,
+#kehadiranData td {
+  text-align: center;
+}
 </style>
 </head>
 
@@ -534,16 +539,15 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS8vo9uydbIuPrA_4wLc85_x7
     if(hasData) activeIndexes.push(i);
   }
 
-  // === HEADER ===
-  let headRow = "<tr>";
-  headRow += "<th>Sektor</th>";
-  headRow += "<th>Total</th>";
+  // === HEADER (TOTAL DI KANAN) ===
+  let headRow = "<tr><th>Sektor</th>";
 
   activeIndexes.forEach(i => {
     headRow += `<th>${headers[i]}</th>`;
   });
 
-  headRow += "</tr>";
+  headRow += "<th>Total</th></tr>";
+
   thead.innerHTML = headRow;
 
   // === DATA ===
@@ -552,7 +556,7 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS8vo9uydbIuPrA_4wLc85_x7
 
   rows.slice(1).forEach(row => {
 
-    let sektor = row[0]; // kolom pertama = sektor
+    let sektor = row[0];
     let rowTotal = 0;
 
     let rowHTML = `<tr><td>${sektor}</td>`;
@@ -561,17 +565,12 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS8vo9uydbIuPrA_4wLc85_x7
       let val = parseInt(row[colIndex]) || 0;
       rowTotal += val;
       monthTotals[idx] += val;
+      rowHTML += `<td>${val}</td>`;
     });
 
     grandTotal += rowTotal;
 
     rowHTML += `<td style="font-weight:bold;">${rowTotal}</td>`;
-
-    activeIndexes.forEach((colIndex) => {
-      let val = parseInt(row[colIndex]) || 0;
-      rowHTML += `<td>${val}</td>`;
-    });
-
     rowHTML += "</tr>";
 
     tbody.innerHTML += rowHTML;
@@ -580,12 +579,12 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS8vo9uydbIuPrA_4wLc85_x7
   // === TOTAL BAWAH ===
   let totalRow = `<tr style="font-weight:bold;background:#eef2ff;">`;
   totalRow += `<td>Total</td>`;
-  totalRow += `<td>${grandTotal}</td>`;
 
   monthTotals.forEach(t => {
     totalRow += `<td>${t}</td>`;
   });
 
+  totalRow += `<td>${grandTotal}</td>`;
   totalRow += "</tr>";
 
   tbody.innerHTML += totalRow;
