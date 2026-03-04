@@ -301,6 +301,44 @@ footer{
 
 }
 }
+  <style>
+...CSS lain di atas...
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#777;
+  font-size:14px;
+}
+
+/* ========================= */
+/* LOGIN LOGO GLOW EFFECT   */
+/* ========================= */
+
+.login-logo{
+  width:95px;
+  margin-bottom:20px;
+  border-radius:50%;
+  padding:10px;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  box-shadow:
+    0 0 15px rgba(255,255,255,0.4),
+    0 0 30px rgba(74,105,189,0.6),
+    0 10px 25px rgba(0,0,0,0.4);
+  transition:0.4s ease;
+}
+
+.login-logo:hover{
+  transform:scale(1.08);
+  box-shadow:
+    0 0 25px rgba(255,255,255,0.6),
+    0 0 45px rgba(74,105,189,0.9),
+    0 15px 35px rgba(0,0,0,0.5);
+}
+
+</style>
 </style>
 </head>
 
