@@ -523,36 +523,41 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS8vo9uydbIuPrA_4wLc85_x7
   const thead = document.getElementById("kehadiranHead");
   const tbody = document.getElementById("kehadiranData");
 
-  // ===== DETEKSI BULAN YANG ADA ISI =====
-  let activeMonthIndexes = [];
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
 
-  for(let i = 2; i < headers.length; i++){
+  // === DETEKSI BULAN YANG ADA DATA ===
+  let activeIndexes = [];
+
+  for(let i = 1; i < headers.length; i++){
     let hasData = rows.slice(1).some(row => parseInt(row[i]) > 0);
-    if(hasData) activeMonthIndexes.push(i);
+    if(hasData) activeIndexes.push(i);
   }
 
-  // ===== BUAT HEADER =====
-  let headHTML = "<tr><th>Sektor</th><th>Total</th>";
+  // === HEADER ===
+  let headRow = "<tr>";
+  headRow += "<th>Sektor</th>";
+  headRow += "<th>Total</th>";
 
-  activeMonthIndexes.forEach(i => {
-    headHTML += `<th>${headers[i]}</th>`;
+  activeIndexes.forEach(i => {
+    headRow += `<th>${headers[i]}</th>`;
   });
 
-  headHTML += "</tr>";
-  thead.innerHTML = headHTML;
+  headRow += "</tr>";
+  thead.innerHTML = headRow;
 
-  // ===== HITUNG TOTAL BULAN =====
-  let monthTotals = new Array(activeMonthIndexes.length).fill(0);
+  // === DATA ===
+  let monthTotals = new Array(activeIndexes.length).fill(0);
   let grandTotal = 0;
 
-  // ===== BUAT DATA =====
   rows.slice(1).forEach(row => {
 
-    let sektor = row[1];
+    let sektor = row[0]; // kolom pertama = sektor
     let rowTotal = 0;
+
     let rowHTML = `<tr><td>${sektor}</td>`;
 
-    activeMonthIndexes.forEach((colIndex, idx) => {
+    activeIndexes.forEach((colIndex, idx) => {
       let val = parseInt(row[colIndex]) || 0;
       rowTotal += val;
       monthTotals[idx] += val;
@@ -562,16 +567,17 @@ fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS8vo9uydbIuPrA_4wLc85_x7
 
     rowHTML += `<td style="font-weight:bold;">${rowTotal}</td>`;
 
-    activeMonthIndexes.forEach((colIndex) => {
+    activeIndexes.forEach((colIndex) => {
       let val = parseInt(row[colIndex]) || 0;
       rowHTML += `<td>${val}</td>`;
     });
 
     rowHTML += "</tr>";
+
     tbody.innerHTML += rowHTML;
   });
 
-  // ===== BARIS TOTAL BAWAH =====
+  // === TOTAL BAWAH ===
   let totalRow = `<tr style="font-weight:bold;background:#eef2ff;">`;
   totalRow += `<td>Total</td>`;
   totalRow += `<td>${grandTotal}</td>`;
