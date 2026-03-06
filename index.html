@@ -712,5 +712,22 @@ function checkPassword(){
 
 });
 </script>
+  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvHz3UBL9fbIbgFDDrjrIX7oa9g4zVxFYYT4l-2cWqk8JwEKjKllg0FopIpXmfNMbRaHtnY8KE-1m7/pub?gid=1733949881&single=true&output=csv";
+
+let allData = [];
+
+fetch(sheetURL)
+.then(res => res.text())
+.then(data => {
+
+const rows = data.trim().split("\n").map(r => r.split(","));
+
+rows.shift(); // hapus header
+
+allData = rows;
+
+initDropdown(); // ini yang mengisi dropdown tahun
+
+});
 </body>
 </html>
