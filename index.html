@@ -542,12 +542,9 @@ let ket = r[1];
 let masuk = parseInt(r[2]) || 0;
 let keluar = parseInt(r[3]) || 0;
 
-let tgl = tanggal.split("-");
+let tahunData = tanggal.slice(-4);
 
-let bulanData = tgl[1];
-let tahunData = tgl[2];
-
-if(tahunData === tahun && (bulan === "" || bulanData === bulan)){
+if(tahunData === tahun){
 
 saldo += masuk - keluar;
 
