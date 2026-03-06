@@ -512,9 +512,9 @@ initDropdown();
 function initDropdown(){
 
 let tahunSet = new Set();
-
+  
 allData.forEach(r=>{
-let tahun = r[0].slice(-4);
+let tahun = r[0].trim().slice(-4);
 tahunSet.add(tahun);
 });
 
