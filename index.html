@@ -499,8 +499,18 @@ fetch(sheetURL)
 .then(res => res.text())
 .then(data => {
 
-const rows = data.trim().split("\n").map(r => r.split(","));
+const rows = data.trim().split("\n").map(r => {
+let c = r.split(",");
 
+return [
+c[0],                    // tanggal
+c[1],                    // keterangan
+(c[2]||"") + (c[3]||""), // penerimaan
+(c[4]||"") + (c[5]||""), // pengeluaran
+(c[6]||"") + (c[7]||"")  // saldo
+];
+});
+  
 rows.shift();
 
 allData = rows;
