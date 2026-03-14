@@ -398,9 +398,9 @@ footer{
       <p>Total Kehadiran</p>
       <h3>99 Kalak</h3>
     </div>
-    <div class="summary-item">
+  <div class="summary-item">
       <p>Saldo Kas Akhir</p>
-      <h3>Rp 5.069.000</h3>
+      <h3 id="saldoSummary">Rp 0</h3>
     </div>
     <div class="summary-item">
       <p>Persentase Kehadiran</p>
@@ -509,7 +509,8 @@ rows.shift();
 allData = rows;
 
 initDropdown();
-
+updateSaldoSummary();
+  
 });
 
 function initDropdown(){
@@ -568,6 +569,16 @@ tbody.innerHTML += `
 
 }
 
+function updateSaldoSummary(){
+
+let lastRow = allData[allData.length - 1];
+
+let saldo = parseInt((lastRow[4] || "0").replace(/[^\d]/g,"")) || 0;
+
+document.getElementById("saldoSummary").innerText =
+"Rp " + saldo.toLocaleString("id-ID");
+
+}  
 </script>
 </div>
 
