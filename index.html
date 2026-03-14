@@ -491,32 +491,24 @@ Bulan:
     
 <script>
 
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvHz3UBL9fbIbgFDDrjrIX7oa9g4zVxFYYT4l-2cWqk8JwEKjKllg0FopIpXmfNMbRaHtnY8KE-1m7/pub?gid=1733949881&single=true&output=csv";
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvHz3UBL9fbIbgFDDrjrIX7oa9g4zVxFYYT4l-2cWqk8JwEKjKllg0FopIpXmfNMbRaHtnY8KE-1m7/pub?gid=1733949881&single=true&output=tsv";
 
-let allData = [];
+  let allData = [];
 
 fetch(sheetURL)
 .then(res => res.text())
 .then(data => {
 
 const rows = data.trim().split("\n").map(r => {
-let c = r.split(",");
+let c = r.split("\t");
 
 return [
-c[0],                    // tanggal
-c[1],                    // keterangan
-(c[2]||"") + (c[3]||""), // penerimaan
-(c[4]||"") + (c[5]||""), // pengeluaran
-(c[6]||"") + (c[7]||"")  // saldo
+c[0],
+c[1],
+c[2],
+c[3],
+c[4]
 ];
-});
-  
-rows.shift();
-
-allData = rows;
-
-initDropdown();
-
 });
 
 function initDropdown(){
@@ -545,7 +537,7 @@ let bulan = document.getElementById("bulanSelect").value;
 let tbody = document.getElementById("keuanganData");
 tbody.innerHTML = "";
 
-let saldo = 0;
+let saldo = parseInt(...)
 
 allData.forEach(r=>{
 
